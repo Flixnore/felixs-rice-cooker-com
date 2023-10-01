@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Rice Cooker</title>
+  <link rel="stylesheet" href="style/style.css">
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       document.getElementById('on').addEventListener('click', function() {
@@ -14,12 +14,19 @@
     });
   </script>
 </head>
+<!-- <h1 style="color: rgb(255, 106, 0); font-family: 'Open Sans', sans-serif;">🍚✧Felix's✧Rice✧Cooker✧.Com✧🍚</h1> -->
+<h1 class="title">🍚✧Felix's✧Rice✧Cooker✧.Com✧🍚</h1>
 <body>
-  Rice cooker controls:
-  <button id="on">On</button>
+  <h1 class = "controls">Rice cooker controls:</h1>
+  
+  <div class="button-container">
+  <button id="on" >On</button>
   <button id="off">Off</button>
+  </div>  
   <br />
-  Please don't leave on :)
+
+  <h2 class = "controls">Please don't leave on :)</h2>
+
   <br />
   <br />
   <img src="/video-stream" />

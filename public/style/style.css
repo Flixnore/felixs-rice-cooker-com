@@ -1,0 +1,28 @@
+/* style/style.css */
+
+.title {
+    color: rgb(0, 98, 255);
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+  }
+  
+.controls{
+    color: rgb(0, 213, 255);
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+}
+
+.button-container {
+    text-align: center; /* Center-align the content horizontally */
+    margin-top: 20px; /* Adjust the margin as needed to control vertical alignment */
+  }
+  
+  /* Additional button styling if desired */
+  .button-container button {
+    /* Add your button styles here */
+    /* Increase the font size */
+    font-size: 40px; /* Adjust the value as needed */
+    color: rgb(0, 81, 255);
+    border: none; /* Remove the button border */
+    border-radius: 10px; /* Adjust the value to control the roundness of the edges */
+  }
