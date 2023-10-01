@@ -1,0 +1,17 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rice Cooker</title>
+</head>
+<body>
+  <button id="toggleButton">Toggle Rice Cooker</button>
+  <script>
+    document.getElementById('toggleButton').addEventListener('click', function() {
+      fetch('/toggle-rice-cooker');
+    });
+  </script>
+  <img src="test.jpg" />
+</body>
+</html>
+
