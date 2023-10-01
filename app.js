@@ -1,5 +1,6 @@
 // Existing code
 const express = require('express');
+const request = require('request');
 const app = express();
 const port = 3000;
 
@@ -43,6 +44,10 @@ app.get('/turn-off', async (req, res) => {
   } catch (error) {
     res.send('Error occurred');
   }
+});
+
+app.get('/video-stream', async (req, res) => {
+  req.pipe(request.get("http://192.168.0.200:8080/?action=stream")).pipe(res);
 });
 
 app.listen(port, () => {
