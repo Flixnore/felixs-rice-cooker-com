@@ -3,15 +3,24 @@
 <html>
 <head>
   <title>Rice Cooker</title>
-</head>
-<body>
-  <button id="toggleButton">Toggle Rice Cooker</button>
   <script>
-    document.getElementById('toggleButton').addEventListener('click', function() {
-      fetch('/toggle-rice-cooker');
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById('on').addEventListener('click', function() {
+        fetch('/turn-on');
+      });
+      document.getElementById('off').addEventListener('click', function() {
+        fetch('/turn-off');
+      });
     });
   </script>
-  <img src="test.jpg" />
+</head>
+<body>
+  Rice cooker controls:
+  <button id="on">On</button>
+  <button id="off">Off</button>
+  <br />
+  <br />
+  <img src="http://192.168.0.200:8080/?action=stream" />
 </body>
 </html>
 
