@@ -20,4 +20,5 @@ Step 2:
 ## The Implementation
 Not much else to say here. The raspberry pi runs a simple nodejs server with 3 endpoints "/", "/turn-on", and "turn-off". It also runs a mjpg streamer server that the frontend uses. Click the buttons, make an http request, doesn't get easier then that.
 
+![demo gif](https://github.com/Flixnore/felixs-rice-cooker-com/blob/main/demo.gif?raw=true)
 
