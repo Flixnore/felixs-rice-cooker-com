@@ -3,26 +3,61 @@
 <html>
 <head>
   <title>Rice Cooker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    h3 {
+      margin-bottom: 0.1em;  /* Adjust as needed */
+    }
+  </style>
   <script>
+    async function fetchLogs() {
+      const response = await fetch('/fetch-logs');
+      const logs = await response.json();
+      const logDiv = document.getElementById('logs');
+      logDiv.innerHTML = "";
+      logs.forEach(log => {
+        const timestamp = new Date(log.timestamp).toLocaleString('en-US', { timeZone: 'UTC' });
+        logDiv.innerHTML += `<p>${timestamp} - ${log.name} turned ${log.action}${log.message ? `: ${log.message}` : ''}</p>`;
+      });
+    }
+
+    function handleButtonClick(action, nameInput, messageInput) {
+      if (nameInput.value === "") {
+        alert("Please put in your name!");
+      } else {
+        fetch(`/${action}?name=${nameInput.value}&message=${messageInput.value}`);
+        setTimeout(fetchLogs, 1000);
+      }
+    }
+    
     document.addEventListener("DOMContentLoaded", function() {
-      document.getElementById('on').addEventListener('click', function() {
-        fetch('/turn-on');
-      });
-      document.getElementById('off').addEventListener('click', function() {
-        fetch('/turn-off');
-      });
+      fetchLogs();  // Initial fetch
+      const nameInput = document.getElementById('nameInput');
+      const messageInput = document.getElementById('messageInput');
+    
+      document.getElementById('on').addEventListener('click', () => handleButtonClick('turn-on', nameInput, messageInput));
+      document.getElementById('off').addEventListener('click', () => handleButtonClick('turn-off', nameInput, messageInput));
     });
+
   </script>
 </head>
 <body>
-  Rice cooker controls:
+  <h1>🍚✧Felix's✧Rice✧Cooker✧.Com✧🍚</h1>
+  <h3>Rice cooker controls:</h3>
+  <br />
+  <input id="nameInput" type="text" placeholder="Your Name" required>
   <button id="on">On</button>
   <button id="off">Off</button>
+  <input id="messageInput" type="text" placeholder="Your Message (Optional)">
+  <br />
   <br />
   Please don't leave on :)
   <br />
   <br />
   <img src="/video-stream" />
+  <div id="logs">
+    <!-- Logs will be displayed here -->
+  </div>
 </body>
 </html>
 
