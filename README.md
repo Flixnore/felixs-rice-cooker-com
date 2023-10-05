@@ -22,3 +22,11 @@ Not much else to say here. The raspberry pi runs a simple nodejs server with 3 e
 
 ![demo gif](https://github.com/Flixnore/felixs-rice-cooker-com/blob/main/demo.gif?raw=true)
 
+## The Addons
+Since writing this and using it a little bit, I've added some creature comforts :)
+
+- Logging of timestamp, action, name, and message
+- Secret ignored name in case I don't want to log :)
+- Always display status of cooker
+- About page that points to this README
+
