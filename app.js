@@ -1,6 +1,7 @@
 const express = require('express');
 const request = require('request');
 const axios = require('axios');
+const marked = require('marked');
 const db = require('./db');
 const app = express();
 
@@ -12,6 +13,25 @@ app.use(express.static('public'));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
+});
+
+app.get('/about', async (req, res) => {
+  try {
+    const response = await axios.get('https://raw.githubusercontent.com/Flixnore/felixs-rice-cooker-com/main/README.md');
+    const readme = response.data;
+    const htmlContent = marked.parse(readme);
+    res.send(`
+      <html>
+        <body>
+          <a href="/">Back to Home</a>
+          ${htmlContent}
+        </body>
+      </html>
+    `);
+  } catch (error) {
+    console.log('Error fetching README:', error);
+    res.status(500).send('Could not fetch README');
+  }
 });
 
 app.get('/get-status', async (req, res) => {
