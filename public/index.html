@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     h3 {
-      margin-bottom: 0.1em;  /* Adjust as needed */
+      margin-top: 0.05em;  /* Adjust as needed */
+      margin-bottom: 0.05em;  /* Adjust as needed */
     }
   </style>
   <script>
@@ -16,7 +17,10 @@
       const logDiv = document.getElementById('logs');
       logDiv.innerHTML = "";
       logs.forEach(log => {
-        const timestamp = new Date(log.timestamp).toLocaleString('en-US', { timeZone: 'UTC' });
+        console.log(log.timestamp)
+        const utcDate = log.timestamp.replace(" ", "T") + "Z";
+        const timestamp = new Date(utcDate).toLocaleString();
+
         logDiv.innerHTML += `<p>${timestamp} - ${log.name} turned ${log.action}${log.message ? `: ${log.message}` : ''}</p>`;
       });
     }
@@ -29,7 +33,26 @@
         setTimeout(fetchLogs, 1000);
       }
     }
-    
+
+   function updateStatus() {
+  fetch('/get-status')
+    .then(response => response.json())
+    .then(data => {
+      const statusElement = document.getElementById('status');
+      if (data.isOn) {
+        statusElement.innerText = 'On';
+        statusElement.style.color = '#00cc00'; // Saturated pastel green
+      } else {
+        statusElement.innerText = 'Off';
+        statusElement.style.color = '#ff0000'; // Saturated pastel red
+      }
+    })
+    .catch(error => console.error('Error fetching status:', error));
+}
+
+// Poll every 1000ms (1 second)
+setInterval(updateStatus, 1000);
+ 
     document.addEventListener("DOMContentLoaded", function() {
       fetchLogs();  // Initial fetch
       const nameInput = document.getElementById('nameInput');
@@ -43,15 +66,15 @@
 </head>
 <body>
   <h1>🍚✧Felix's✧Rice✧Cooker✧.Com✧🍚</h1>
-  <h3>Rice cooker controls:</h3>
+  <p>
+  Welcome to Felix's Rice Cooker.Com. If this is online, feel free to give it a go, I don't mind. Just drop your name and please don't leave it on :)
+  </p>
+  <h3>Rice cooker controls — Status: <span id="status">Off</span></h3>
   <br />
   <input id="nameInput" type="text" placeholder="Your Name" required>
   <button id="on">On</button>
   <button id="off">Off</button>
   <input id="messageInput" type="text" placeholder="Your Message (Optional)">
-  <br />
-  <br />
-  Please don't leave on :)
   <br />
   <br />
   <img src="/video-stream" />

@@ -3,15 +3,26 @@ const request = require('request');
 const axios = require('axios');
 const db = require('./db');
 const app = express();
+
 const port = 3000;
 
-app.use(express.json());  // To parse JSON bodies
+app.use(express.json());
 app.use(express.static('public'));
+
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+app.get('/get-status', async (req, res) => {
+  try {
+    const response = await axios.get('http://192.168.0.208/relay/0');
+    const isOn = response.data.ison;
+    res.json({ isOn });
+  } catch (error) {
+    res.status(500).send('Error occurred');
+  }
+});
 
 async function handleRiceCookerAction(req, res, action) {
   const name = req.query.name;
@@ -28,8 +39,10 @@ async function handleRiceCookerAction(req, res, action) {
     const isOn = response.data.ison;
 
     if ((action === 'on' && isOn) || (action === 'off' && !isOn)) {
+      if (name !== process.env.IGNORED_NAME) {
+        db.run("INSERT INTO logs (name, action, message) VALUES (?, ?, ?)", [name, action, message]);  // Updated query
+      }
       res.send(`Successfully turned ${action} rice cooker`);
-      db.run("INSERT INTO logs (name, action, message) VALUES (?, ?, ?)", [name, action, message]);  // Updated query
     } else {
       res.send(`Failed to turn ${action}`);
     }
